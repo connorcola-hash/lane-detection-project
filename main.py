@@ -9,7 +9,8 @@ while True:
         break
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image_blur = cv2.GaussianBlur(image_gray, (5, 5), 0)
-    cv2.imshow("Video", image_blur)
+    image_canny = cv2.Canny(image_blur, 50, 300)
+    cv2.imshow("Video", image_canny)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
