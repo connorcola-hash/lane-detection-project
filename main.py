@@ -4,8 +4,15 @@ cap = cv2.VideoCapture("test_video.mp4")
 
 while True:
     success,image = cap.read()
-    cv2.imshow("Video", image)
+    
+    if not success:
+        break
+    image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cv2.imshow("Video", image_gray)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+cap.release()
+cv2.destroyAllWindows()
 
