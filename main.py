@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from collections import deque
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("test_video.mp4")
 
 def average_lines(array):
     left_candidates = []
