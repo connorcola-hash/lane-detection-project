@@ -1,3 +1,17 @@
 venv/
 test_video.mp4
 output/
+
+# Python
+__pycache__/
+*.pyc
+.DS_Store
+
+# Roboflow dataset (~2.7GB) — re-download on each machine via download_dataset.py
+Lane-Detection-2/
+
+# Training run outputs — checkpoints tracked separately in checkpoints/
+runs/
+
+# Pretrained base weights (auto-downloaded by ultralytics on first run)
+yolov8n.pt
