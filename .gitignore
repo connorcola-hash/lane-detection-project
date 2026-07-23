@@ -15,3 +15,7 @@ runs/
 
 # Pretrained base weights (auto-downloaded by ultralytics on first run)
 yolov8n.pt
+
+# Any auto-downloaded base weights
+*.pt
+!checkpoints/*.pt
