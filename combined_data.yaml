@@ -1,0 +1,14 @@
+# Combines the original Roboflow-hosted lane-detection-awvt7 dataset with
+# D2D's dashed-marker dataset (after remap_d2d_labels.py). Relative paths
+# (resolved relative to this file's directory) instead of the absolute ones
+# Roboflow writes into Lane-Detection-2/data.yaml, so this works unchanged on
+# any machine that has both dataset folders downloaded alongside it.
+names:
+- lane
+nc: 1
+train:
+- Lane-Detection-2/train/images
+- D2D-Lane-Detection/train/images
+val:
+- Lane-Detection-2/valid/images
+- D2D-Lane-Detection/valid/images

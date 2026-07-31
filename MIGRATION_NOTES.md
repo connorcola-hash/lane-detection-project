@@ -32,6 +32,41 @@ that env var on the Windows machine before running it.
   lineage total). Copied into `checkpoints/last.pt` and `checkpoints/best.pt`
   so they sync through git.
 
+## Supplementary dataset: D2D dashed markers
+- Roboflow workspace: `d2d`
+- Project: `lane-detection-tqgmk`
+- Version: 2
+- License: **CC BY 4.0** (not MIT like the primary dataset — requires
+  attribution if the trained model is ever published/distributed)
+- URL: https://universe.roboflow.com/d2d/lane-detection-tqgmk/dataset/2
+- 4 classes: `crossing`, `dashed-lane`, `full-lane`, `transverse-lane`
+
+The original `lane-detection-awvt7` set is sourced from Korean roads with
+only solid lane markings, which is why the trained model was failing to
+detect dashed lane lines. This dataset adds real dashed-marker examples.
+
+Added via two scripts, gitignored the same way as `Lane-Detection-2/`:
+- `download_d2d_dataset.py` — downloads the latest version to
+  `D2D-Lane-Detection/`.
+- `remap_d2d_labels.py` — D2D's 4 classes don't match this project's single
+  `lane` class. `dashed-lane`/`full-lane` are real lane-boundary examples and
+  get remapped to class 0; `crossing`/`transverse-lane` are crosswalk/
+  stop-line style boxes with a different shape, so those annotation lines are
+  dropped entirely rather than mislabeled as `lane`. Idempotent via a
+  `.remapped` marker file in `D2D-Lane-Detection/`.
+
+`train.py` now points at `combined_data.yaml` (repo root, tracked in git)
+instead of `Lane-Detection-2/data.yaml` directly — it lists both dataset
+directories' image folders as a combined `train`/`val` set. It uses paths
+relative to the repo root (unlike the Roboflow-generated `data.yaml`, which
+hardcodes an absolute path for whatever machine downloaded it), so no
+per-machine edits are needed there — just make sure both dataset folders
+have been downloaded before training.
+
+Verified locally (Mac) that `ultralytics.data.utils.check_det_dataset`
+resolves `combined_data.yaml` into a single 1-class (`lane`) dataset combining
+both sources before this was committed.
+
 ## Windows setup checklist
 - [ ] Install CUDA-enabled PyTorch (pick the build matching your installed
       CUDA version at https://pytorch.org/get-started/locally/) — the
@@ -52,3 +87,6 @@ that env var on the Windows machine before running it.
 - [ ] Disable sleep during long training runs — Windows equivalent of
       `caffeinate`: `powercfg /change standby-timeout-ac 0` (or Settings >
       Power & sleep), and revert afterward if desired.
+- [ ] Run `python download_d2d_dataset.py && python remap_d2d_labels.py` to
+      fetch and remap the supplementary dashed-marker dataset — `train.py`
+      now trains on both datasets via `combined_data.yaml`.

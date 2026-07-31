@@ -7,8 +7,10 @@ __pycache__/
 *.pyc
 .DS_Store
 
-# Roboflow dataset (~2.7GB) — re-download on each machine via download_dataset.py
+# Roboflow datasets — re-download on each machine via download_dataset.py /
+# download_d2d_dataset.py (then remap_d2d_labels.py for the latter)
 Lane-Detection-2/
+D2D-Lane-Detection/
 
 # Training run outputs — checkpoints tracked separately in checkpoints/
 runs/
