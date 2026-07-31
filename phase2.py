@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 
 cap = cv2.VideoCapture("test_video.mp4")
-model = YOLO("yolov8n.pt")
+model = YOLO("checkpoints/best.pt")
 
 while True:
     success, image = cap.read()
